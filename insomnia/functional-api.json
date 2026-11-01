@@ -1,0 +1,142 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-11-02T00:00:00.000Z",
+  "__export_source": "functional-api.insomnia",
+  "resources": [
+    {
+      "_id": "wrk_functional_api",
+      "parentId": null,
+      "modified": 1762041600000,
+      "created": 1762041600000,
+      "name": "Functional API",
+      "description": "Requests for authentication and protected API access",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_functional_api_base",
+      "parentId": "wrk_functional_api",
+      "modified": 1762041600000,
+      "created": 1762041600000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:8080",
+        "login": "demo",
+        "password": "demo-password",
+        "token": ""
+      },
+      "dataPropertyOrder": null,
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 0,
+      "_type": "environment"
+    },
+    {
+      "_id": "fld_auth",
+      "parentId": "wrk_functional_api",
+      "modified": 1762041600000,
+      "created": 1762041600000,
+      "name": "Authentication",
+      "description": "Login request that returns a JWT",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -200,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_protected",
+      "parentId": "wrk_functional_api",
+      "modified": 1762041600000,
+      "created": 1762041600000,
+      "name": "Protected API",
+      "description": "Requests for checking JWT-protected access",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -100,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_login",
+      "parentId": "fld_auth",
+      "modified": 1762041600000,
+      "created": 1762041600000,
+      "name": "Login and receive JWT",
+      "description": "Use the returned token in the Base Environment token variable.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"login\": \"{{ _.login }}\",\n  \"password\": \"{{ _.password }}\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "url": "{{ _.base_url }}/auth/login",
+      "authentication": {},
+      "metaSortKey": -200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_data_with_token",
+      "parentId": "fld_protected",
+      "modified": 1762041600000,
+      "created": 1762041600000,
+      "name": "Get data with JWT",
+      "description": "Expected response: HTTP 200 and demo data.",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parameters": [],
+      "url": "{{ _.base_url }}/api/data",
+      "authentication": {},
+      "metaSortKey": -200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_data_without_token",
+      "parentId": "fld_protected",
+      "modified": 1762041600000,
+      "created": 1762041600000,
+      "name": "Get data without JWT",
+      "description": "Expected response: HTTP 401 Unauthorized.",
+      "method": "GET",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "url": "{{ _.base_url }}/api/data",
+      "authentication": {},
+      "metaSortKey": -100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    }
+  ]
+}
