@@ -1,4 +1,6 @@
-image: gradle:8.14.1-jdk11
+image:
+  name: gradle:8.14.1-jdk17
+  pull_policy: if-not-present
 
 stages:
   - test
