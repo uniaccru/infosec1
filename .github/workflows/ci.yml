@@ -75,15 +75,22 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Check NVD API key configuration
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          if [ -z "$NVD_API_KEY" ]; then
+            echo "::warning::NVD_API_KEY is unavailable. This is expected for workflows from forked pull requests."
+          else
+            echo "NVD_API_KEY is configured."
+          fi
+
       - name: Run OWASP Dependency-Check
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
-          if [ -n "$NVD_API_KEY" ]; then
-            ./gradlew --no-daemon dependencyCheckAnalyze -Pnvd.api.key="$NVD_API_KEY"
-          else
-            ./gradlew --no-daemon dependencyCheckAnalyze
-          fi
+          ./gradlew --no-daemon dependencyCheckAnalyze \
+            -Pnvd.api.key="${NVD_API_KEY:-}"
 
       - name: Upload Dependency-Check report
         if: always()

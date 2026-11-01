@@ -51,4 +51,9 @@ dependencyCheck {
     failBuildOnCVSS = 7.0
     suppressionFile = 'config/dependency-check-suppressions.xml'
     formats = ['HTML', 'XML']
+    nvd {
+        apiKey = providers.gradleProperty('nvd.api.key')
+                .orElse(providers.environmentVariable('NVD_API_KEY'))
+                .orNull
+    }
 }
