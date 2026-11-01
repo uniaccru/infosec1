@@ -109,5 +109,6 @@ jobs:
         with:
           name: dependency-check-report
           path: |
-            build/reports/dependency-check/
+            build/reports/dependency-check-report.html
+            build/reports/dependency-check-report.xml
           if-no-files-found: warn
