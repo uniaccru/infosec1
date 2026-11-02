@@ -1,6 +1,6 @@
 # Functional API
 
-Учебный функциональный REST API на Java, Spring Boot, Gradle и PostgreSQL.
+REST API на Java, Spring Boot, Gradle и PostgreSQL.
 Проект демонстрирует аутентификацию пользователей, JWT-защиту API,
 хэширование паролей и автоматические security-проверки в GitHub Actions.
 
@@ -30,47 +30,6 @@ src/main/java/com/example/api
 ├── security     # JWT-сервис и JWT-фильтр
 └── service      # бизнес-логика
 ```
-
-## Запуск PostgreSQL
-
-PostgreSQL запускается в Docker Compose:
-
-```bash
-docker compose up -d postgres
-```
-
-Контейнер доступен с хоста по адресу:
-
-```text
-localhost:5433
-```
-
-Параметры подключения можно изменить через переменные окружения, описанные в
-[`application.properties`](./src/main/resources/application.properties).
-
-## Запуск приложения
-
-Требуется Java 17 или новее.
-
-```bash
-./gradlew bootRun
-```
-
-Приложение запускается на:
-
-```text
-http://localhost:8080
-```
-
-Для локальной разработки по умолчанию создаётся demo-пользователь:
-
-```text
-login: demo
-password: demo-password
-```
-
-Пароль не хранится в открытом виде: при создании пользователя он сохраняется
-в PostgreSQL в виде BCrypt-хэша.
 
 ## API
 
@@ -222,20 +181,6 @@ GitHub Actions workflow находится в
 2. `gradle spotbugsMain` — SAST-анализ Java-кода;
 3. `gradle dependencyCheckAnalyze` — SCA-проверка Gradle-зависимостей по базе CVE.
 
-Для Dependency-Check в GitHub Actions используется secret:
-
-```text
-NVD_API_KEY
-```
-
-Его нужно добавить в:
-
-```text
-Settings → Secrets and variables → Actions
-```
-
-HTML и XML отчёты security-сканеров загружаются в GitHub Actions как artifacts.
-
 ## Скриншоты отчётов
 
 ### SAST — SpotBugs
@@ -246,10 +191,6 @@ SpotBugs проанализировал Java-классы проекта и не
 
 ### SCA — OWASP Dependency-Check
 
-Dependency-Check сформировал отчёт по зависимостям проекта. На момент
-создания скриншота в отчёте указано `Vulnerabilities Found: 0`:
+Dependency-Check сформировал отчёт по зависимостям проекта. На момент создания скриншота в отчёте указано `Vulnerabilities Found: 0`:
 
 ![Dependency-Check report](./images/Снимок%20экрана%202026-11-02%20в%2002.59.40.png)
-
-Актуальные полные отчёты можно скачать из artifacts соответствующего запуска
-workflow в разделе **Actions** репозитория GitHub.
