@@ -1,4 +1,4 @@
-# Functional API
+# Лабораторная работа #1
 
 REST API на Java, Spring Boot, Gradle и PostgreSQL.
 Проект демонстрирует аутентификацию пользователей, JWT-защиту API,
